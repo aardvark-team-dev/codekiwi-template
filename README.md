@@ -2,13 +2,12 @@
 CODEKIWI NEXT.JS TEMPLATE v1
 ===
 
-# 셋업 프로세스 (cmd 기준)
-1. 기능 설명 (YAML)을 tasks.yaml에 붙여넣기
-2. npm i
-3. npx auth secret
-4. npm run dev (만약 5를 같은 터미널에서 진행하고 싶다면 start /B cmd /C "npm run dev")
-5. (새로운 터미널에서) opencode
-6. (opencode 터미널에서) /init
+# 셋업 프로세스 (Linux bash 기준)
+1. npm i
+2. npx auth secret
+3. npm run dev &
+4. opencode
+5. (opencode 터미널에서) /init
 
 - Agentic Development System: OpenCode
 
