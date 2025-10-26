@@ -1,0 +1,70 @@
+{ 
+  "$schema": "https://opencode.ai/config.json",
+  "keybinds": {
+    "agent_cycle": "f0",
+    "messages_page_up": "up",
+    "messages_page_down": "down"
+  },
+  "permission": {
+    "bash": {
+      "*": "allow",
+      "cd": "allow",
+      "find": "allow",
+      "ls": "allow",
+      "ps": "allow",
+      "ss": "allow",
+      "pgrep": "allow",
+      "sed": "allow",
+      "grep": "allow",
+      "mkdir": "allow",
+      "npm install": "allow",
+      "npm run lint": "allow",
+      "npm run build": "allow",
+      "npm run dev": "allow",
+      "npm run start": "deny"
+    }
+  },
+  "agent": {
+    "plan": {
+      "disable": true
+    },
+    "build": {
+      "disable": true
+    },
+    "kiwi": {
+      "disable": false,
+      "permission": {
+        "edit": "ask"
+      }
+    },
+    "codie": {
+      "disable": false,
+      "permission": {
+        "edit": "allow"
+      }
+    },
+    "init": {
+      "disable": false,
+      "permission": {
+        "edit": "allow"
+      }
+    }
+  },
+  "mcp": {
+    "playwright": {
+      "type": "local",
+      "command": ["npx", "@playwright/mcp@latest"]
+    },
+    "context7": {
+      "type": "remote",
+      "url": "https://mcp.context7.com/mcp",
+      "headers": {
+        "CONTEXT7_API_KEY": "ctx7sk-f31fa01d-20fb-4fac-ab7b-bac767b876cb"
+    }
+  },
+  "chrome-devtools": {
+      "type": "local",
+      "command": ["npx", "-y", "chrome-devtools-mcp@latest"]
+    }
+  }
+}
