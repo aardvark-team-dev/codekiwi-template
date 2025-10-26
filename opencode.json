@@ -40,13 +40,13 @@
     "codie": {
       "disable": false,
       "permission": {
-        "edit": "allow"
+        "edit": "ask"
       }
     },
     "init": {
       "disable": false,
       "permission": {
-        "edit": "allow"
+        "edit": "ask"
       }
     }
   },
