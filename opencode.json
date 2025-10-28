@@ -33,12 +33,44 @@
     },
     "kiwi": {
       "disable": false,
+      "tools": {
+        "kiwi_editTask": false,
+        "kiwi_addTask": false,
+        "kiwi_resolveUncertainty": true
+      },
+      "permission": {
+        "edit": "ask"
+      }
+    },
+    "kiwi-product-manager": {
+      "disable": false,
+      "tools": {
+        "kiwi_editTask": true,
+        "kiwi_addTask": true,
+        "kiwi_resolveUncertainty": true
+      },
+      "permission": {
+        "edit": "deny"
+      }
+    },
+    "build-prototype": {
+      "disable": false,
+      "tools": {
+        "kiwi_editTask": false,
+        "kiwi_addTask": false,
+        "kiwi_resolveUncertainty": false
+      },
       "permission": {
         "edit": "ask"
       }
     },
     "codie": {
       "disable": false,
+      "tools": {
+        "kiwi_editTask": true,
+        "kiwi_addTask": true,
+        "kiwi_resolveUncertainty": true
+      },
       "permission": {
         "edit": "ask"
       }
@@ -60,11 +92,7 @@
       "url": "https://mcp.context7.com/mcp",
       "headers": {
         "CONTEXT7_API_KEY": "ctx7sk-f31fa01d-20fb-4fac-ab7b-bac767b876cb"
-    }
-  },
-  "chrome-devtools": {
-      "type": "local",
-      "command": ["npx", "-y", "chrome-devtools-mcp@latest"]
+      }
     }
   }
 }
