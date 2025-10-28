@@ -7,9 +7,9 @@
     "build": "node scripts/clear-next-server-process.js && next build && node scripts/after-build.js",
     "start": "next start",
     "lint": "eslint",
-    "db:seed": "tsx scripts/seed-dev.ts",
-    "db:reset": "tsx scripts/reset-dev.ts",
-    "admin:create": "tsx scripts/create-admin.ts"
+    "db:seed": "node scripts/clear-next-server-process.js && tsx scripts/seed-dev.ts && node scripts/after-db-setup.js",
+    "db:reset": "node scripts/clear-next-server-process.js && tsx scripts/reset-dev.ts && node scripts/after-db-setup.js",
+    "admin:create": "node scripts/clear-next-server-process.js && tsx scripts/create-admin.ts && node scripts/after-db-setup.js"
   },
   "dependencies": {
     "@radix-ui/react-accordion": "^1.2.12",
