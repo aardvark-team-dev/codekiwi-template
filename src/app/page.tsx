@@ -117,7 +117,7 @@ export default function Home() {
         </div>
         <ol className="font-mono list-inside list-decimal text-sm/6 text-center sm:text-left">
           <li className="mb-2 tracking-[-.01em]">
-            채팅창에 <code className="bg-black/[.05] dark:bg-white/[.06] font-mono font-semibold px-1 py-0.5 rounded">/init</code>을 입력하세요.
+            왼쪽 검은 화면을 클릭하고 <code className="bg-black/[.05] dark:bg-white/[.06] font-mono font-semibold px-1 py-0.5 rounded">/init</code>을 입력한 뒤 엔터를 누르세요.
           </li>
           <li className="mb-2 tracking-[-.01em]">
             첫 번째 프로토타입이 나올 때까지 기다리세요.
