@@ -38,7 +38,7 @@ export const FilePermissionPlugin: Plugin = async ({ client, directory, worktree
   const agentFilePermissions = {
     "kiwi": {
       deny: [".opencode/**", ".codekiwi/tasks.yaml", "src/app/codekiwi-dashboard/**", "src/app/actions/**", "src/domain/**", "src/lib/shared/database/**", "src/auth.config.ts", "src/auth.ts", "src/middleware.ts", "src/app/api/**", "src/app/login/page.tsx", "src/app/signup/page.tsx", "src/components/auth/**"],
-      allow: ["src/domain/**/*.mock.ts", "src/app/**/*.tsx", "src/lib/mock-data.ts", "src/components/**/*.tsx"]
+      allow: ["*"]
     },
     "codie": {
       deny: [".opencode/**", ".codekiwi/tasks.yaml", "src/app/codekiwi-dashboard/**"],
