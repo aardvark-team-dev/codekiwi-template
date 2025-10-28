@@ -13,8 +13,18 @@
 import fs from 'fs'
 import path from 'path'
 import { seedDatabase } from './seed-dev'
+import * as clearNextServerProcess from './clear-next-server-process.js'
+
+const clearNextServer = clearNextServerProcess.main
 
 async function resetDatabase() {
+  // Next.js 서버 프로세스 정리
+  try {
+    await clearNextServer()
+  } catch (error: any) {
+    console.warn('⚠️ Next.js 프로세스 정리 실패:', error.message)
+  }
+
   console.log('🔄 데이터베이스 완전 리셋 시작...\n')
 
   try {
@@ -63,6 +73,7 @@ async function resetDatabase() {
     await seedDatabase()
 
     console.log('\n✅ 데이터베이스 리셋 완료!')
+    console.log('\n[Codekiwi System] DB 세팅이 성공했다면, 반드시 즉시 npm run dev를 실행해주세요! 사용자에게 물어볼 필요는 없습니다.')
 
   } catch (error: any) {
     console.error('\n❌ 데이터베이스 리셋 실패:', error.message)

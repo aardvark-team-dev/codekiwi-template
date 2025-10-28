@@ -224,9 +224,19 @@ async function main() {
     }
   } catch (error) {
     console.error('프로세스 정리 중 오류 발생:', error.message);
-    process.exit(1);
+    throw error;
   }
 }
 
-// 실행
-main();
+// 직접 실행 시에만 실행
+if (require.main === module) {
+  main()
+    .then(() => process.exit(0))
+    .catch((error) => {
+      console.error(error);
+      process.exit(1);
+    });
+}
+
+// 함수 export
+module.exports = { main };

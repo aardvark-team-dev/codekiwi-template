@@ -13,8 +13,18 @@
 
 import { UserService } from '../src/domain/user/backend/UserService'
 import { SqliteUserRepo } from '../src/domain/user/backend/SqliteUserRepo'
+import * as clearNextServerProcess from './clear-next-server-process.js'
+
+const clearNextServer = clearNextServerProcess.main
 
 async function createAdmin() {
+  // Next.js 서버 프로세스 정리
+  try {
+    await clearNextServer()
+  } catch (error: any) {
+    console.warn('⚠️ Next.js 프로세스 정리 실패:', error.message)
+  }
+
   const args = process.argv.slice(2)
   
   if (args.length < 3) {
@@ -68,6 +78,9 @@ async function createAdmin() {
     adminUsers.forEach(user => {
       console.log(`- ${user.email} (${user.name})`)
     })
+
+    // DB 설정 완료 메시지
+    console.log('\n[Codekiwi System] DB 세팅이 성공했다면, 반드시 즉시 npm run dev를 실행해주세요! 사용자에게 물어볼 필요는 없습니다.')
 
   } catch (error: any) {
     console.error('❌ Admin 계정 생성 실패:', error.message)
