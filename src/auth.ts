@@ -4,6 +4,18 @@ import { object, string, ZodError } from "zod"
 import { UserService } from "@/domain/user/backend/UserService"
 import authConfig from "./auth.config"
 import { SqliteUserRepo } from "@/domain/user/backend/SqliteUserRepo"
+import { SessionUser, toSessionUser } from "@/domain/user/types"
+
+// NextAuth 타입 확장 - User 도메인의 SessionUser 재사용
+declare module "next-auth" {
+  interface User extends SessionUser {}
+  
+  interface Session {
+    user: SessionUser
+  }
+  
+  interface JWT extends SessionUser {}
+}
 
 // Zod 스키마 정의
 const signInSchema = object({
@@ -46,11 +58,11 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
             throw new Error("Invalid credentials.")
           }
 
-          return {
-            id: user.id,
-            email: user.email,
-            name: user.name,
-          }
+          // 관리자 여부 확인
+          const isAdmin = userService.isAdmin(user.id)
+
+          // User -> SessionUser 변환 (헬퍼 함수 사용)
+          return toSessionUser(user, isAdmin)
         } catch (error) {
           if (error instanceof ZodError) {
             return null
@@ -61,16 +73,19 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     }),
   ],
   callbacks: {
+    // 공식 문서 권장: user의 모든 속성을 token에 복사
     async jwt({ token, user }) {
       if (user) {
-        token.id = user.id
+        // user가 있으면 (첫 로그인 시) 모든 정보를 token에 저장
+        return { ...token, ...user }
       }
       return token
     },
+    // 공식 문서 권장: token의 모든 속성을 session에 복사
     async session({ session, token }) {
-      if (session.user) {
-        session.user.id = token.id as string
-      }
+      // JWT 인터페이스를 SessionUser로 확장했으므로 안전하게 캐스팅
+      const user = token as unknown as SessionUser
+      session.user = user
       return session
     },
   },

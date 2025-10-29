@@ -45,3 +45,35 @@ export interface UpdateUserData {
   name?: string | null
 }
 
+// ============================================================================
+// Session & Auth Types
+// ============================================================================
+
+/**
+ * 세션용 사용자 정보
+ * - password 제외
+ * - Date를 string으로 직렬화
+ * - isAdmin 추가
+ */
+export interface SessionUser extends Omit<User, 'password' | 'createdAt' | 'updatedAt'> {
+  createdAt: string  // ISO 8601 string
+  updatedAt: string  // ISO 8601 string
+  isAdmin: boolean
+  emailVerified: Date | null  // NextAuth AdapterUser 호환성을 위해 필요
+}
+
+/**
+ * User를 SessionUser로 변환하는 헬퍼 함수
+ */
+export function toSessionUser(user: User, isAdmin: boolean): SessionUser {
+  return {
+    id: user.id,
+    email: user.email,
+    name: user.name,
+    createdAt: user.createdAt.toISOString(),
+    updatedAt: user.updatedAt.toISOString(),
+    isAdmin,
+    emailVerified: null,  // Credentials provider는 이메일 인증을 사용하지 않음
+  }
+}
+
