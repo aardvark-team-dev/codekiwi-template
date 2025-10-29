@@ -1,41 +1,33 @@
-import NextAuth from "next-auth"
-import authConfig from "./auth.config"
-import { NextResponse } from 'next/server'
+/**
+ * Next.js Middleware - Auth.js v5 인증 처리
+ * 
+ * 이 middleware는 Edge Runtime에서 실행됩니다.
+ * 
+ * 📖 동작 방식:
+ * 1. Auth.js가 자동으로 auth.config.ts의 authorized callback을 호출합니다
+ * 2. authorized callback이 false를 반환하면 자동으로 /login으로 리다이렉트됩니다
+ * 
+ * 📝 경로 제어:
+ * - 공개/비공개 경로 설정: auth.config.ts의 authorized callback 수정
+ * 
+ * 🔗 관련 파일:
+ * - auth.config.ts: Edge-compatible 설정 (경로별 권한 제어)
+ * - auth.ts: 전체 Auth 설정 (Credentials provider, DB 접근)
+ * 
+ */
 
-// Edge-compatible NextAuth instance
-const { auth } = NextAuth(authConfig)
+export { auth as middleware } from "@/auth"
 
-export default auth((req) => {
-  const { pathname } = req.nextUrl
-  const publicPaths = ['/login', '/signup', '/', '/codekiwi-dashboard']
-  
-  // 공개 경로는 인증 없이 접근 가능
-  if (publicPaths.includes(pathname)) {
-    return NextResponse.next()
-  }
-
-  // 인증되지 않은 사용자 처리
-  if (!req.auth) {
-    // API 요청은 401 JSON 응답
-    if (pathname.startsWith('/api/')) {
-      return NextResponse.json(
-        { success: false, error: '로그인이 필요합니다.' },
-        { status: 401 }
-      )
-    }
-    
-    // 페이지 요청은 로그인 페이지로 리다이렉트
-    const loginUrl = new URL('/login', req.nextUrl.origin)
-    loginUrl.searchParams.set('callbackUrl', pathname)
-    return NextResponse.redirect(loginUrl)
-  }
-
-  // 인증된 사용자는 요청 진행
-  return NextResponse.next()
-})
-
+/**
+ * Middleware가 실행될 경로 패턴 정의
+ * 
+ * 현재 설정: 정적 리소스와 API 경로를 제외한 모든 경로
+ * 
+ * ⚠️ 주의: 
+ * 공개/비공개 경로 제어는 여기가 아닌 auth.config.ts에서 합니다!
+ */
 export const config = {
   matcher: [
-    '/((?!_next/static|_next/image|favicon.ico|api/auth/|[^?]*\\.(?:jpg|jpeg|gif|png|svg|ico|webp)).*)',
+    '/((?!api|_next/static|_next/image|favicon.ico|.*\\.(?:jpg|jpeg|gif|png|svg|ico|webp)).*)',
   ],
 }
