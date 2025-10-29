@@ -19,6 +19,11 @@
 export { auth as middleware } from "@/auth"
 
 /**
+ * 런타임 설정: Node.js runtime 사용
+ */
+export const runtime = 'nodejs'
+
+/**
  * Middleware가 실행될 경로 패턴 정의
  * 
  * 현재 설정: 정적 리소스와 API 경로를 제외한 모든 경로
