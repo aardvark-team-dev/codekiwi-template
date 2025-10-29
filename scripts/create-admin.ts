@@ -7,8 +7,8 @@
  * 또는
  * npx tsx scripts/create-admin.ts <email> <password> <name>
  * 
- * 예시:
- * npx tsx scripts/create-admin.ts admin@codekiwi.ai 0000 "관리자"
+ * 예시 (비밀번호 8글자 이상):
+ * npx tsx scripts/create-admin.ts admin@codekiwi.ai 12345678 "관리자"
  */
 
 import { UserService } from '../src/domain/user/backend/UserService'

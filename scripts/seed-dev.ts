@@ -28,13 +28,13 @@ interface SeedUser {
 const SEED_USERS: SeedUser[] = [
   {
     email: 'admin@example.com',
-    password: '0000',
+    password: '12345678',
     name: '관리자',
     isAdmin: true
   },
   {
     email: 'test@example.com',
-    password: '0000',
+    password: '12345678',
     name: '테스트 유저',
     isAdmin: false
   }
