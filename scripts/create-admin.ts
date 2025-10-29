@@ -14,8 +14,16 @@
 import { UserService } from '../src/domain/user/backend/UserService'
 import { SqliteUserRepo } from '../src/domain/user/backend/SqliteUserRepo'
 import * as clearNextServerProcess from './clear-next-server-process.js'
+import { z } from 'zod'
 
 const clearNextServer = clearNextServerProcess.main
+
+// 입력 유효성 검사를 위한 Zod 스키마
+const adminSchema = z.object({
+  email: z.string().email({ message: '유효한 이메일 주소를 입력해주세요.' }),
+  password: z.string().min(8, { message: '비밀번호는 최소 8자 이상이어야 합니다.' }),
+  name: z.string().min(1, { message: '이름을 입력해주세요.' }),
+})
 
 async function createAdmin() {
   // Next.js 서버 프로세스 정리
@@ -34,6 +42,18 @@ async function createAdmin() {
   }
 
   const [email, password, name] = args
+
+  // 입력값 검증
+  const validation = adminSchema.safeParse({ email, password, name })
+  
+  if (!validation.success) {
+    console.error('❌ 입력값 검증 실패:\n')
+    const errors = validation.error.flatten().fieldErrors
+    if (errors.email) console.error(`  📧 이메일: ${errors.email.join(', ')}`)
+    if (errors.password) console.error(`  🔒 비밀번호: ${errors.password.join(', ')}`)
+    if (errors.name) console.error(`  👤 이름: ${errors.name.join(', ')}`)
+    process.exit(1)
+  }
 
   console.log(`📧 이메일: ${email}`)
   console.log(`👤 이름: ${name}\n`)
