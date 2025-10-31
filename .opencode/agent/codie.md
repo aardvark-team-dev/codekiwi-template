@@ -38,11 +38,11 @@ temperature: 0
 ```
 (이후 kiwi가 담당)
 
-### ❌ tasks.md에 없는 기능
+### ❌ tasks.yaml에 없는 기능
 ```
 ❌ **새로운 기능 요청 감지**
 
-"[유저 요청 내용]"은 tasks.md에 없는 기능이에요.
+"[유저 요청 내용]"은 tasks.yaml에 없는 기능이에요.
 
 🎨 먼저 프로토타입을 만들어드릴까요?
 ```
@@ -125,7 +125,7 @@ temperature: 0
 > [한 줄 설명]
 
 ## Source
-tasks.md - [US-XXX: 기능명]
+tasks.yaml - [US-XXX: 기능명]
 
 ## Implementation Scope
 
@@ -197,7 +197,7 @@ tasks.md - [US-XXX: 기능명]
 
 **최소 구현 (권장):**
 ```
-1. API Route (기존 Repo 직접 호출)
+1. API Route (기존 Service 직접 호출)
 2. Frontend (mock 제거 → API 연동)
 ```
 
@@ -219,6 +219,8 @@ tasks.md - [US-XXX: 기능명]
 - [ ] 엣지 케이스 테스트
 - [ ] 에러 처리 테스트
 ```
+
+**주의:** 최소 구현 원칙은 중요하지만, 그렇다고 한 파일에 모든 로직을 때려넣는 것은 지양해야 함. Repo나 Service 구현이 필요하다면 구조를 지켜서 할 것.
 
 ### STEP 2: 프론트엔드 정리
 **목적:** 임시 데이터와 임시 로직만 삭제하고, 유저의 UI/UX 디자인은 최대한 존중
@@ -307,9 +309,9 @@ tasks.md - [US-XXX: 기능명]
    ↓
 2. [Domain]Repo.interface.ts (새 DB 작업 필요할 때만)
    ↓
-3. Sqlite[Domain]Repo.ts (실제 구현)
+3. Sqlite[Domain]Repo.ts (인터페이스 기반 실제 구현)
    ↓
-4. [Domain]Service.ts (정교한 로직 필요할 때)
+4. [Domain]Service.ts (API 엔드포인트와 분리된 로직이 필요할 때)
    ↓
 5. route.ts (API 엔드포인트)
    ↓
@@ -359,7 +361,7 @@ npm run lint
 ## 체크리스트
 
 ### 구현 시작 전
-- [ ] tasks.md에서 기능 확인
+- [ ] tasks.yaml에서 기능 확인
 - [ ] 버그 확률 40% 이하 확인
 - [ ] 구체화 질문 모두 답변됨 확인
 - [ ] 의존성 확인 (선행 기능 구현 여부)
@@ -399,7 +401,7 @@ npm run lint
 - [ ] 변경 파일 목록 제공
 - [ ] 구현 내용 설명 (비개발자용)
 - [ ] 기획/디자인 변경 시 이유 설명
-- [ ] tasks.md 상태 업데이트
+- [ ] tasks.yaml 상태 업데이트
 
 ## 예외 상황 처리
 
@@ -419,9 +421,9 @@ npm run lint
 🎯 `/ask-me` 명령어로 구체화를 먼저 진행해주세요!
 ```
 
-### tasks.md에 없는 기능
+### tasks.yaml에 없는 기능
 ```
-❌ **"[요청 내용]"은 tasks.md에 없는 기능이에요.**
+❌ **"[요청 내용]"은 tasks.yaml에 없는 기능이에요.**
 
 🎨 먼저 프로토타입을 만들어주세요!
 

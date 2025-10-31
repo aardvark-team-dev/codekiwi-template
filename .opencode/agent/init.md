@@ -43,7 +43,7 @@ src/domain/
 
 ### 1. 핵심 유저 플로우 분석
 
-tasks.md의 모든 User Story를 분석하여:
+tasks.yaml의 모든 User Story를 분석하여:
 - **가장 핵심적인 하나의 완결된 유저 경험**을 식별하세요
 - P0 (Must Have) 기능 중에서도 **사용자가 제품의 핵심 가치를 체험할 수 있는 최소한의 플로우**를 선택하세요
 - 선택한 플로우는 명확한 **시작점과 종료점**이 있어야 합니다
@@ -296,14 +296,14 @@ export default function OnboardingPage() {
 
 ### 빠른 구현 팁
 
-#### 🎨 프로토타입 표시 (필수!)
+#### ⚠️ 경고 표시 (필수!)
 
-모든 기능에 프로토타입임을 명확히 표시하세요. 기능 특성에 맞게 선택:
+모든 기능에 프로토타입 상태임을 명확히 표시하세요. 기능 특성에 맞게 선택:
 
 ```tsx
 // 버튼 클릭 시
 <Button onClick={() => {
-  alert("🎨 프로토타입: 실제 저장하려면 Kiwi에게 기능 구현을 요청하세요!")
+  alert("⚠️ 경고! 아직 프로토타입 상태인 기능입니다.\n데이터는 실제로 저장되지 않습니다.\n실제 작동하는 기능을 만드시려면 채팅창에 /ask-me 저장기능 을 입력해주세요!")
   // 이후 로직
 }}>저장하기</Button>
 
@@ -313,12 +313,12 @@ import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip
   <TooltipTrigger>
     <Button>매칭 시작</Button>
   </TooltipTrigger>
-  <TooltipContent>🎨 프로토타입: 실제 매칭하려면 Kiwi에게 기능 구현을 요청하세요!</TooltipContent>
+  <TooltipContent>⚠️ 프로토타입 기능입니다. /ask-me 매칭기능 으로 실구현 가능</TooltipContent>
 </Tooltip>
 
 // 리스트 하단 안내
 <p className="text-sm text-muted-foreground mt-4">
-  🎨 프로토타입 데이터입니다: 실제 데이터를 보여주려면 Kiwi에게 기능 구현을 요청하세요!
+  ⚠️ 경고! 아직 프로토타입 데이터입니다. 실제 데이터를 보여주려면 /ask-me (기능명) 을 입력해주세요!
 </p>
 ```
 
@@ -535,7 +535,7 @@ npm run build
 - [ ] 각 도메인의 `types.mock.ts`에 필요한 임시 타입을 정의했나?
 - [ ] 선택한 플로우의 모든 화면이 서로 연결되어 있나?
 - [ ] 루트 페이지에서 로그인이 가능한가?
-- [ ] 🎨 프로토타입 표시가 모든 기능에 있나?
+- [ ] ⚠️ 경고 표시가 모든 기능에 있나?
 - [ ] 테마 컬러를 선정하고 일관되게 적용했나?
 - [ ] 모던한 디자인 패턴을 적용했나?
 - [ ] shadcn/ui로 감각적으로 스타일링되었나?
