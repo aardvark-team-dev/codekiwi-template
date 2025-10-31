@@ -156,10 +156,8 @@ src/
 ├── domain/
 │   ├── matching/
 │   │   ├── types.ts            # ← 비워두기
-│   │   └── types.mock.ts       # 🎨 임시 프론트엔드 전용 타입
 │   └── user/
 │   │   ├── types.ts            # ✅ 이미 정의됨 (User 인터페이스)
-│   │   └── types.mock.ts       # 🎨 User 추가 정보 필요 시 Mock (UserProfileExtension)
 ├── lib/
 │   ├── mock-data.ts            # 🎨 Mock 데이터
 │   └── utils.ts
@@ -167,12 +165,10 @@ src/
 ```
 
 **🔑 중요:** 
-- `src/domain/` 폴더는 init-domain에서 빈 파일로 생성됩니다.
+- `src/domain/` 폴더는 init-domain에서 빈 폴더로 생성됩니다.
 - **`user` 도메인은 예외**: 이미 회원가입/로그인 시스템과 통합되어 `types.ts`가 정의되어 있습니다
   - `User` 인터페이스는 수정 금지
-  - 추가 프로필 정보가 필요하면 `types.mock.ts`에 `UserProfileExtension` 정의
-- **다른 도메인은 `types.mock.ts`에 프론트엔드에 필요한 임시 타입을 정의**하세요
-  - 예: `src/domain/matching/types.mock.ts`
+- FE에서 추가 정보가 필요하면 FE 코드에 바로 Mock Type을 정의
 - domain 타입/로직은 나중에 `types.ts`에 채울 예정입니다
 
 ---
@@ -232,6 +228,11 @@ export default function LandingPage() {
 - localStorage로 로그인 상태 직접 관리
 - 로그인 플로우 건너뛰기
 
+**권한 관리 가이드**
+- 페이지의 회원 공개 여부 관리는 auth.config.ts에서 하세요 (middleware.ts, auth.ts는 건드릴 필요 없습니다)
+- admin only 요소는 AdminOnly component로 감싸세요
+- admin 여부 이외의 추가적인 role 관리가 필요하다면, mock 주석을 추가하고 우선 쿠키나 localStorage로 구현하세요. (아래 참조)
+
 #### 2. 온보딩 화면 (필요시에만 새로 생성)
 
 **언제 만들어야 하나?**
@@ -280,7 +281,7 @@ export default function OnboardingPage() {
 **✅ Mock으로 구현 (localStorage, 하드코딩, 상태관리 등):**
 - 비즈니스 로직: 매칭, 추천, 검색, 필터링
 - 도메인 데이터: 파티, 게시글, 댓글, 알림
-- 사용자 추가 정보: 프로필 상세, 관심사, 설정 (온보딩에서 수집)
+- 사용자 추가 정보: 프로필 상세, 관심사, admin 이외의 role (온보딩에서 수집)
 - 통계/분석: 차트, 리포트, 대시보드 데이터
 
 **❌ Mock 금지 (사전 구성된 시스템 사용):**
@@ -297,31 +298,28 @@ export default function OnboardingPage() {
 
 #### 🎨 프로토타입 표시 (필수!)
 
-모든 페이지에 프로토타입임을 명확히 표시하세요:
+모든 기능에 프로토타입임을 명확히 표시하세요. 기능 특성에 맞게 선택:
 
-**방법 1: 배너**
 ```tsx
-// 기본 배너
-<div className="bg-orange-100 border-l-4 border-orange-500 p-4 mb-4">
-  <p className="font-bold">🎨 프로토타입 모드</p>
-  <p className="text-sm text-orange-700">데이터는 실제로 저장되지 않습니다.</p>
-</div>
-
-// 글래스모피즘 배너 (배경 이미지가 있는 페이지에서)
-<div className="backdrop-blur-md bg-orange-50/80 border border-orange-200/50 rounded-lg p-4 mb-4">
-  <p className="font-semibold text-orange-900">🎨 프로토타입 모드</p>
-  <p className="text-sm text-orange-700">데이터는 실제로 저장되지 않습니다.</p>
-</div>
-```
-
-**방법 2: 버튼 클릭 시 알림**
-```tsx
+// 버튼 클릭 시
 <Button onClick={() => {
-  alert("🎨 프로토타입: 실제 저장되지 않습니다");
+  alert("🎨 프로토타입: 실제 저장하려면 Kiwi에게 기능 구현을 요청하세요!")
   // 이후 로직
-}}>
-  저장하기
-</Button>
+}}>저장하기</Button>
+
+// 호버 툴팁
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip"
+<Tooltip>
+  <TooltipTrigger>
+    <Button>매칭 시작</Button>
+  </TooltipTrigger>
+  <TooltipContent>🎨 프로토타입: 실제 매칭하려면 Kiwi에게 기능 구현을 요청하세요!</TooltipContent>
+</Tooltip>
+
+// 리스트 하단 안내
+<p className="text-sm text-muted-foreground mt-4">
+  🎨 프로토타입 데이터입니다: 실제 데이터를 보여주려면 Kiwi에게 기능 구현을 요청하세요!
+</p>
 ```
 
 #### 📦 shadcn/ui 미니멀하게 활용
@@ -373,7 +371,6 @@ export interface User {
 - 추가 정보만 별도 타입으로 Mock 구현
 
 ```tsx
-// src/domain/user/types.mock.ts
 // 🎨 임시 타입 - User의 추가 정보만 Mock으로 처리
 export interface UserProfileExtension {
   userId: string  // User.id와 연결
@@ -388,23 +385,22 @@ export interface UserProfileExtension {
 **2. Mock 데이터 작성:**
 ```tsx
 // src/lib/mock-data.ts
-import type { UserProfileExtension } from '@/domain/user/types.mock'
 
-// 🎨 MOCK DATA - User의 추가 정보만
-export const mockUserProfiles: UserProfileExtension[] = [
+// 🎨 MOCK DATA - User의 추가 정보만 (타입 별도 import 없이 직접 정의)
+export const mockUserProfiles = [
   { 
     userId: 'user-id-1', 
     profileImage: '/avatars/1.jpg', 
     interests: ['영화', '운동'],
     bio: '영화와 운동을 좋아합니다',
-    userType: 'buyer'
+    userType: 'buyer' as const
   },
   { 
     userId: 'user-id-2', 
     profileImage: '/avatars/2.jpg', 
     interests: ['독서', '음악'],
     bio: '책과 음악을 사랑합니다',
-    userType: 'seller'
+    userType: 'seller' as const
   },
 ]
 
@@ -424,6 +420,7 @@ export async function getMockUserProfile(userId: string): Promise<UserProfileExt
 'use client'
 import { useSession } from 'next-auth/react'
 import { useState, useEffect } from 'react'
+import Image from 'next/image'
 
 export default function ProfilePage() {
   const { data: session } = useSession()  // ✅ 실제 User 정보 (auth)
@@ -450,7 +447,13 @@ export default function ProfilePage() {
           <p>관심사: {profile.interests?.join(', ')}</p>
           <p>소개: {profile.bio}</p>
           {profile.profileImage && (
-            <img src={profile.profileImage} alt="프로필" />
+            <Image 
+              src={profile.profileImage} 
+              alt="프로필"
+              width={100}
+              height={100}
+              className="rounded-full"
+            />
           )}
         </>
       )}
@@ -476,7 +479,7 @@ export const mockParties = [
 
 // ⚠️ Next.js 15: 동적 라우팅에서는 params가 Promise
 
-// Server Component (권장) - app/party/[id]/page.tsx
+// 동적 라우트 페이지가 필요할 경우, Server Component 권장 - app/party/[id]/page.tsx
 export default async function PartyDetailPage({
   params,
 }: {
@@ -505,7 +508,7 @@ export default function PartyClientComponent({
 }: {
   params: Promise<{ id: string }>
 }) {
-  const { id } = use(params)  // ✅ Client에서는 use() 훅 사용
+  const { id } = use(params)
   
   return <div>Party ID: {id}</div>
 }
@@ -539,11 +542,16 @@ npm run build
 - [ ] Mock 데이터로 동작 확인이 가능한가?
 
 ### 구현 완료 절차
-구현이 완료되면 반드시 다음 정보를 유저에게 알려주세요.
+구현이 완료되면 반드시 다음 절차를 진행하세요.
+- `npm run db:seed`
+- `npm run dev`
+
+그 다음, 아래 정보를 유저에게 알려주세요.
 - 시연 가이드
-  - 홈페이지에서 로그인하여 시작
+  - 새로고침 후, 홈페이지에서 회원가입하거나 예시 계정으로 로그인하여 시작
   - (Actor 별로, User Journey의 처음부터 끝까지를 체험해볼 수 있는 Step-by-step 가이드)
 - 다음 단계 안내
   - 디자인, UI 변경은 요청 시 바로 가능
   - 기능 수정이나 실구현은 버그 확률 산정이 먼저 필요
+  - 버그가 발생하면 `/debug` 입력 후 버그를 자세히 설명하면 해결 가능
   - 가장 먼저 버그 확률 산정이 필요한 기능 안내, 진행할지 묻기

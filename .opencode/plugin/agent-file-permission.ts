@@ -37,11 +37,11 @@ const wildcardAll = (input: string, patterns: Record<string, any>): any => {
 export const FilePermissionPlugin: Plugin = async ({ client, directory, worktree }) => {
   const agentFilePermissions = {
     "kiwi": {
-      deny: [".opencode/**", ".codekiwi/tasks.yaml", "src/app/codekiwi-dashboard/**", "src/app/actions/**", "src/domain/**", "src/lib/shared/database/**", "src/auth.config.ts", "src/auth.ts", "src/middleware.ts", "src/app/api/**", "src/app/login/page.tsx", "src/app/signup/page.tsx", "src/components/auth/**"],
+      deny: [".opencode/**", ".codekiwi/tasks.yaml", "src/app/codekiwi-dashboard/**", "src/app/actions/**", "src/domain/**", "src/lib/shared/database/**", "src/auth.ts", "src/middleware.ts", "src/app/api/**", "src/app/login/page.tsx", "src/app/signup/page.tsx", "src/components/auth/**"],
       allow: ["*"]
     },
     "build-prototype": {
-      deny: [".opencode/**", ".codekiwi/tasks.yaml", "src/app/codekiwi-dashboard/**", "src/app/actions/**", "src/domain/**", "src/lib/shared/database/**", "src/auth.config.ts", "src/auth.ts", "src/middleware.ts", "src/app/api/**", "src/app/login/page.tsx", "src/app/signup/page.tsx", "src/components/auth/**"],
+      deny: [".opencode/**", ".codekiwi/tasks.yaml", "src/app/codekiwi-dashboard/**", "src/app/actions/**", "src/domain/**", "src/lib/shared/database/**", "src/auth.ts", "src/middleware.ts", "src/app/api/**", "src/app/login/page.tsx", "src/app/signup/page.tsx", "src/components/auth/**"],
       allow: ["*"]
     },
     "codie": {
@@ -49,7 +49,7 @@ export const FilePermissionPlugin: Plugin = async ({ client, directory, worktree
       allow: ["*"]
     },
     "init": {
-      deny: [".opencode/**", ".codekiwi/tasks.yaml", "src/app/codekiwi-dashboard/**", "src/app/actions/**", "src/domain/**", "src/lib/shared/database/**", "src/auth.config.ts", "src/auth.ts", "src/middleware.ts", "src/app/api/**", "src/app/login/page.tsx", "src/app/signup/page.tsx", "src/components/auth/**"],
+      deny: [".opencode/**", ".codekiwi/tasks.yaml", "src/app/codekiwi-dashboard/**", "src/app/actions/**", "src/domain/**", "src/lib/shared/database/**", "src/auth.ts", "src/middleware.ts", "src/app/api/**", "src/app/login/page.tsx", "src/app/signup/page.tsx", "src/components/auth/**"],
       allow: ["*"]
     }
   }

@@ -28,7 +28,6 @@ const signInSchema = object({
     .max(32, "비밀번호는 32자 이하여야 합니다"),
 })
 
-// UserService는 여기서만 사용 (Edge Runtime 아님)
 const userService = new UserService(new SqliteUserRepo())
 
 export const { handlers, signIn, signOut, auth } = NextAuth({

@@ -19,7 +19,7 @@ temperature: 0
   - `src/domain` 수정 (단, types.mock.ts 생성/수정은 허용)
   - `src/lib/shared/database` 수정
   - `src/app/api` 수정
-  - `src/middleware.ts`, `src/auth.ts` 수정
+  - `src/middleware.ts`, `src/auth.ts` 수정 (단, 공개범위 변경을 위해 auth.config.ts는 수정 가능)
   - 실제 DB 쿼리 추가/변경
   - 실제 외부 API 연동
 
