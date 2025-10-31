@@ -141,6 +141,14 @@ kiwi_resolveUncertainty tool을 사용할 것.
 
 5. while risk > 0.4:
    - uncertainties를 uncertRisk 높은 순으로 정렬
+   - if uncertainties가 비어있음 (모두 해소됨):
+     (1) "모든 불확실성을 해소했는데도 버그 확률이 {risk*100}%로 여전히 높아요."
+     (2) subagent call: kiwi-product-manager에게 버그 확률 감소 방안 요청
+         - "현재 상황: 모든 uncertainty 해소 완료, 그러나 risk={risk}"
+         - "요청 사항: 버그 확률을 낮출 수 있는 방법과 새로운 선택지를 제시해주세요"
+     (3) .codekiwi/tasks.yaml 읽어서 갱신된 내용 확인
+     (4) "버그 확률을 낮출 수 있는 새로운 선택지를 발견했어요! 계속 질문드릴게요."
+     (5) continue (다시 while 루프 시작)
    - for each uncertainty:
      (1) uncertainty.description을 읽고, 비개발자도 이해 가능한 시나리오 기반  질문으로 유저에게 전달
      (2) acCandidates를 읽고, 비개발자도 이해 가능한 시나리오 기반 선택지로 제시 (pros/cons 포함, 번호 매기기)
@@ -176,6 +184,14 @@ kiwi_resolveUncertainty tool을 사용할 것.
 
 2. while risk > 0.4:
    - uncertainties를 uncertRisk 높은 순으로 정렬
+   - if uncertainties가 비어있음 (모두 해소됨):
+     (1) "모든 불확실성을 해소했는데도 버그 확률이 {risk*100}%로 여전히 높아요."
+     (2) subagent call: kiwi-product-manager에게 버그 확률 감소 방안 요청
+         - "현재 상황: 모든 uncertainty 해소 완료, 그러나 risk={risk}"
+         - "요청 사항: 버그 확률을 낮출 수 있는 방법과 새로운 선택지를 제시해주세요"
+     (3) .codekiwi/tasks.yaml 읽어서 갱신된 내용 확인
+     (4) "버그 확률을 낮출 수 있는 새로운 선택지를 발견했어요! 계속 질문드릴게요."
+     (5) continue (다시 while 루프 시작)
    - for each uncertainty:
      (1) uncertainty.description을 읽고, 비개발자도 이해 가능한 시나리오 기반  질문으로 유저에게 전달
      (2) acCandidates를 읽고, 비개발자도 이해 가능한 시나리오 기반 선택지로 제시 (pros/cons 포함, 번호 매기기)
