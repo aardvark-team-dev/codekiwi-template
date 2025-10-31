@@ -30,7 +30,7 @@ export async function checkTasksYamlExists() {
     const content = await fs.readFile(filePath, 'utf8')
     // 파일이 존재하고 내용이 있으면 true (공백/개행만 있어도 false)
     return { exists: content.trim().length > 0 }
-  } catch (error) {
+  } catch {
     // 파일이 없거나 읽기 실패하면 false
     return { exists: false }
   }

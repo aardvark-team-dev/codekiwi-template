@@ -8,12 +8,14 @@ import { SessionUser, toSessionUser } from "@/domain/user/types"
 
 // NextAuth 타입 확장 - User 도메인의 SessionUser 재사용
 declare module "next-auth" {
+  // eslint-disable-next-line @typescript-eslint/no-empty-object-type
   interface User extends SessionUser {}
   
   interface Session {
     user: SessionUser
   }
   
+  // eslint-disable-next-line @typescript-eslint/no-empty-object-type
   interface JWT extends SessionUser {}
 }
 
