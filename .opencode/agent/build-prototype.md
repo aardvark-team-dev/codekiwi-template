@@ -33,60 +33,58 @@ const mockUsers = [
 ];
 ```
 
-**2. 화면에 "프로토타입임"을 시각적으로 명확히 알릴 것:**
+**2. 화면에 "경고 표시"를 시각적으로 명확히 알릴 것:**
 
 모든 프로토타입 화면, 컴포넌트, 버튼 등에 아래 방식 중 하나 이상을 반드시 적용:
 
-- **배너 방식:**  
-  페이지 상단/하단에 "Prototype Mode" 배너 표시 (예시는 아래 코드 참조)
-- **Alert/Modal 방식:**  
+- **Alert 방식:**  
   사용자가 주요 버튼(예: "저장", "삭제", "등록", "매칭")을 눌렀을 때  
-  `alert("현재는 프로토타입(테스트) 환경입니다. 실제로 데이터가 저장되지 않습니다.")`  
-  또는 간단한 Modal/Toast로 안내 후 mock 처리를 진행
-- **UI 내 고정 안내문:**  
-  폼, 버튼 주변 등 잘 보이는 곳에  
-  `<span className="text-xs text-orange-400 ml-2">🎨 프로토타입 동작(실제 저장X)</span>`
-  등으로 표시 가능
+  `alert("⚠️ 경고! 아직 프로토타입 상태인 기능입니다.\n(한계 설명)\n실제 작동하는 기능을 만드시려면 채팅창에 /ask-me (기능명) 를 입력해주세요!")`
+  
+- **Tooltip 방식:**  
+  버튼 호버 시 툴팁으로 "⚠️ 프로토타입 기능입니다. /ask-me (기능명) 으로 구체화해주세요." 표시
+  
+- **안내문 방식:**  
+  리스트/폼 하단 등에  
+  `<p className="text-sm text-muted-foreground">⚠️ 경고! 아직 프로토타입 데이터입니다. /ask-me (기능명) 으로 구체화해주세요.</p>`
 
 아래는 예시:
 
 ```tsx
-// 🎨 MOCK 버튼 예시
+// ⚠️ Alert 예시
 <button
   onClick={() => {
-    alert("현재는 프로토타입(테스트) 환경입니다. 실제 데이터 연동은 이뤄지지 않습니다.");
+    alert("⚠️ 경고! 아직 프로토타입 상태인 기능입니다.\n데이터는 실제로 저장되지 않습니다.\n실제 작동하는 기능을 만드시려면 채팅창에 /ask-me 저장기능 을 입력해주세요!");
     // ...mock 처리...
   }}
 >
   저장
 </button>
 
-// 🎨 배너 예시
-<div className="bg-orange-100 border-l-4 border-orange-500 text-orange-700 p-4 mb-4">
-  <div className="flex items-center gap-2">
-    <span className="text-lg">🎨</span>
-    <div>
-      <p className="font-bold">Prototype Mode</p>
-      <p className="text-sm">
-        이 화면은 프로토타입입니다. 데이터는 실제로 저장되지 않으며,
-        새로고침 시 일부 정보가 사라질 수 있습니다.
-      </p>
-    </div>
-  </div>
-</div>
+// ⚠️ Tooltip 예시
+<Tooltip>
+  <TooltipTrigger>
+    <button>매칭 시작</button>
+  </TooltipTrigger>
+  <TooltipContent>⚠️ 프로토타입 기능입니다. /ask-me 매칭기능 으로 실구현 가능</TooltipContent>
+</Tooltip>
 
-// 🎨 버튼 옆 안내문 예시
-<button>삭제</button>
-<span className="text-xs text-orange-400 ml-2">🎨 프로토타입 동작</span>
+// ⚠️ 안내문 예시
+<div>
+  {/* 리스트 내용 */}
+</div>
+<p className="text-sm text-muted-foreground mt-4">
+  ⚠️ 경고! 아직 프로토타입 데이터입니다. 실제 데이터를 보여주려면 /ask-me 데이터조회 를 입력해주세요!
+</p>
 ```
 
 **표시 위치 가이드:**
-- **전체 페이지:** 상단/하단 배너, 타이틀, 내비 아래 등
-- **주요 액션 버튼:** 클릭 시 alert/modal/토스트 또는 버튼 옆 안내문
-- **폼/작업 영역:** 폼 상단, 입력창 근처, 주요 액션 옆 등
+- **주요 액션 버튼:** 클릭 시 alert 또는 호버 시 tooltip
+- **리스트/테이블:** 하단에 안내문
+- **폼/작업 영역:** 제출 버튼에 alert 또는 폼 하단에 안내문
 
 **(요약)**  
-"Prototype Mode"임을 **시각적으로 명확히 알리는 방식이라면 배너, 알림, 버튼 안내문 등 자유롭게 활용!  
+프로토타입 상태임을 **명확히 알리고 /ask-me 명령어로 실구현 가능함을 안내!**  
 반드시 1개 이상 삽입
 
 **3. kiwi agent에게 명확히 전달:**
@@ -101,7 +99,7 @@ const mockUsers = [
 
 [중요]
 - **코드**: 모든 mock 데이터에 `🎨 MOCK DATA` 주석
-- **화면**: 모든 페이지에 "Prototype" 시각적 요소 표시
+- **화면**: 모든 기능에 "⚠️ 경고 표시" + "/ask-me (기능명)" 안내
 
 [중요]
 * 서버는 항상 localhost:3000에서만 실행되어야 함. 
