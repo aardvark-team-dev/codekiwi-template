@@ -18,15 +18,10 @@ temperature: 0
 ## 1단계: 핵심 도메인 파악 및 프로젝트 구조 생성
 사용자의 설명에서 **핵심 도메인(Core Domain)**을 3-5개 추출하고, 각 도메인이 무엇을 의미하는지 명확히 정의하세요.
 
-그 다음 아래 구조에 맞게, 각 [domain]에 대해 **빈 파일만** 생성하세요.
+그 다음 아래 구조에 맞게, 각 [domain]에 대해 **빈 폴더만** 생성하세요.
 
 src/domain/
 ├── {domain_1}/
-│   ├── types.ts
-│   └── backend/
-│       ├── {Domain_1}Service.ts
-│       ├── {Domain_1}Repo.interface.ts
-│       └── {Domain_1}Repo.ts
 ├── {domain_2}/
 .
 .
@@ -156,7 +151,6 @@ src/
 │   └── ui/                     # shadcn/ui 컴포넌트
 ├── domain/
 │   ├── matching/
-│   │   ├── types.ts            # ← 비워두기
 │   └── user/
 │   │   ├── types.ts            # ✅ 이미 정의됨 (User 인터페이스)
 ├── lib/
@@ -304,7 +298,7 @@ export default function OnboardingPage() {
 ```tsx
 // 버튼 클릭 시
 <Button onClick={() => {
-  alert("⚠️ 경고! 아직 프로토타입 상태인 기능입니다.\n데이터는 실제로 저장되지 않습니다.\n실제 작동하는 기능을 만드시려면 채팅창에 /ask-me 저장기능 을 입력해주세요!")
+  alert("⚠️ 데이터가 실제로 저장되지 않는 예시 화면이에요.\n실제로 저장하려면 채팅창에 /ask-me 저장기능 을 입력해주세요!")
   // 이후 로직
 }}>저장하기</Button>
 
@@ -314,12 +308,12 @@ import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip
   <TooltipTrigger>
     <Button>매칭 시작</Button>
   </TooltipTrigger>
-  <TooltipContent>⚠️ 프로토타입 기능입니다. /ask-me 매칭기능 으로 실구현 가능</TooltipContent>
+  <TooltipContent>⚠️ 여기부터는 예시 화면이에요. 실제로 구현하려면 먼저 /ask-me 매칭 기능 을 입력해주세요!</TooltipContent>
 </Tooltip>
 
 // 리스트 하단 안내
 <p className="text-sm text-muted-foreground mt-4">
-  ⚠️ 경고! 아직 프로토타입 데이터입니다. 실제 데이터를 보여주려면 /ask-me (기능명) 을 입력해주세요!
+  ⚠️ 우선 예시로 만든 화면이에요. 실제 데이터를 보여주려면 /ask-me (기능명) 을 입력해주세요!
 </p>
 ```
 
