@@ -5,6 +5,9 @@
     "messages_page_up": "up",
     "messages_page_down": "down"
   },
+  "tools": {
+    "Playwright_browser_install": false
+  },
   "permission": {
     "bash": {
       "*": "allow",

@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, Suspense } from 'react'
+import { useState, useEffect, Suspense } from 'react'
 import { signIn } from 'next-auth/react'
 import { useRouter, useSearchParams } from 'next/navigation'
 import Link from 'next/link'
@@ -8,6 +8,7 @@ import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
+import { requestStorageAccessIfNeeded, getStorageAccessStatus } from '@/lib/storage-access'
 
 function LoginForm() {
   const router = useRouter()
@@ -16,8 +17,18 @@ function LoginForm() {
   const [password, setPassword] = useState('')
   const [error, setError] = useState<string | null>(null)
   const [isLoading, setIsLoading] = useState(false)
+  const [showIframeNotice, setShowIframeNotice] = useState(false)
 
   const callbackUrl = searchParams.get('callbackUrl') || '/'
+
+  // iframe 환경 확인
+  useEffect(() => {
+    getStorageAccessStatus().then((status) => {
+      if (status.isInIframe && !status.hasAccess) {
+        setShowIframeNotice(true)
+      }
+    })
+  }, [])
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -25,6 +36,15 @@ function LoginForm() {
     setError(null)
 
     try {
+      // 🔥 Storage Access API 권한 요청 (iframe 환경에서만)
+      const hasAccess = await requestStorageAccessIfNeeded()
+      
+      if (!hasAccess) {
+        setError('쿠키 접근 권한이 필요합니다. 브라우저 설정을 확인해주세요.')
+        setIsLoading(false)
+        return
+      }
+
       const result = await signIn('credentials', {
         redirect: false,
         email,
@@ -59,6 +79,11 @@ function LoginForm() {
           {searchParams.get('message') === 'signup-success' && (
             <div className="mb-4 rounded-md border border-emerald-500/20 bg-emerald-500/10 px-3 py-2 text-sm text-emerald-300">
               회원가입이 완료되었습니다. 로그인해주세요.
+            </div>
+          )}
+          {showIframeNotice && (
+            <div className="mb-4 rounded-md border border-blue-500/20 bg-blue-500/10 px-3 py-2 text-sm text-blue-300">
+              ℹ️ 처음 로그인 시 브라우저가 쿠키 사용 권한을 요청할 수 있습니다.
             </div>
           )}
           <form onSubmit={handleSubmit} className="space-y-4">

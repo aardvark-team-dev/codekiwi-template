@@ -1,12 +1,13 @@
 'use client'
 
-import { useState, Suspense } from 'react'
+import { useState, useEffect, Suspense } from 'react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
+import { requestStorageAccessIfNeeded, getStorageAccessStatus } from '@/lib/storage-access'
 
 function SignUpForm() {
   const router = useRouter()
@@ -15,6 +16,16 @@ function SignUpForm() {
   const [password, setPassword] = useState('')
   const [error, setError] = useState<string | null>(null)
   const [isLoading, setIsLoading] = useState(false)
+  const [showIframeNotice, setShowIframeNotice] = useState(false)
+
+  // iframe 환경 확인
+  useEffect(() => {
+    getStorageAccessStatus().then((status) => {
+      if (status.isInIframe && !status.hasAccess) {
+        setShowIframeNotice(true)
+      }
+    })
+  }, [])
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -22,6 +33,15 @@ function SignUpForm() {
     setError(null)
 
     try {
+      // 🔥 Storage Access API 권한 요청 (iframe 환경에서만)
+      const hasAccess = await requestStorageAccessIfNeeded()
+      
+      if (!hasAccess) {
+        setError('쿠키 접근 권한이 필요합니다. 브라우저 설정을 확인해주세요.')
+        setIsLoading(false)
+        return
+      }
+
       const res = await fetch('/api/auth/register', {
         method: 'POST',
         headers: {
@@ -56,6 +76,11 @@ function SignUpForm() {
           <CardDescription className="text-white/60">시작하기 위해 아래 정보를 입력해주세요.</CardDescription>
         </CardHeader>
         <CardContent>
+          {showIframeNotice && (
+            <div className="mb-4 rounded-md border border-blue-500/20 bg-blue-500/10 px-3 py-2 text-sm text-blue-300">
+              ℹ️ 처음 가입 시 브라우저가 쿠키 사용 권한을 요청할 수 있습니다.
+            </div>
+          )}
           <form onSubmit={handleSubmit} className="space-y-4">
             <div className="space-y-2">
               <Label htmlFor="name" className="text-white/80">이름 (선택)</Label>

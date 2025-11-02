@@ -34,6 +34,39 @@ const userService = new UserService(new SqliteUserRepo())
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
   ...authConfig,
+  
+  // 🔥 cross-origin iframe 환경을 위한 쿠키 설정
+  cookies: {
+    sessionToken: {
+      name: `__Secure-authjs.session-token`,
+      options: {
+        httpOnly: true,
+        sameSite: "none",  // cross-origin 허용
+        path: "/",
+        secure: true,       // HTTPS 필수
+        partitioned: true,  // CHIPS 지원 (Chrome/Edge)
+      },
+    },
+    callbackUrl: {
+      name: `__Secure-authjs.callback-url`,
+      options: {
+        sameSite: "none",
+        path: "/",
+        secure: true,
+        partitioned: true,
+      },
+    },
+    csrfToken: {
+      name: `__Host-authjs.csrf-token`,
+      options: {
+        httpOnly: true,
+        sameSite: "none",
+        path: "/",
+        secure: true,
+      },
+    },
+  },
+  
   providers: [
     Credentials({
       credentials: {
