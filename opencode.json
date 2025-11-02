@@ -5,8 +5,23 @@
     "messages_page_up": "up",
     "messages_page_down": "down"
   },
+  "provider": {
+    "openrouter": {
+      "models": {
+        "moonshotai/kimi-k2-0905": {
+          "name": "fast kimi k2",
+          "options": {
+            "provider": {
+              "only": ["groq"]
+            },
+            "max_tokens": 16000
+          }
+        }
+      }
+    }
+  },
   "tools": {
-    "Playwright_browser_install": false
+    "playwright_browser_install": false
   },
   "permission": {
     "bash": {
@@ -35,7 +50,6 @@
       "disable": true
     },
     "kiwi": {
-      "disable": false,
       "tools": {
         "kiwi_editTask": false,
         "kiwi_addTask": false,
@@ -46,7 +60,6 @@
       }
     },
     "kiwi-product-manager": {
-      "disable": false,
       "tools": {
         "kiwi_editTask": true,
         "kiwi_addTask": true,
@@ -68,7 +81,6 @@
       }
     },
     "codie": {
-      "disable": false,
       "tools": {
         "kiwi_editTask": true,
         "kiwi_addTask": true,
@@ -79,7 +91,6 @@
       }
     },
     "init": {
-      "disable": false,
       "permission": {
         "edit": "ask"
       }

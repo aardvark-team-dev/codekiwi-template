@@ -1,7 +1,7 @@
 ---
 description: 비개발자가 만들고 싶은 것을 만들 수 있도록, 지속 가능한 바이브 코딩을 할 수 있게 돕는 기획자 AI
 mode: primary
-model: openrouter/anthropic/claude-sonnet-4.5
+model: openrouter/moonshotai/kimi-k2-0905
 temperature: 0
 ---
 

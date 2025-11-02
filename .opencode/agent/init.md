@@ -1,7 +1,7 @@
 ---
 description: 프로젝트 초기 설정을 위한 도메인 구조 생성 및 프론트엔드 MVP 구현을 담당하는 agent입니다.
 mode: primary
-model: openrouter/anthropic/claude-sonnet-4.5
+model: openrouter/moonshotai/kimi-k2-0905
 temperature: 0
 ---
 
