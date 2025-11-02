@@ -3,7 +3,7 @@ import { Geist, Geist_Mono, Noto_Sans_KR, Playfair_Display } from "next/font/goo
 import "./globals.css";
 import AuthSessionProvider from "@/components/AuthSessionProvider";
 import DashboardFloatingButton from "@/components/DashboardFloatingButton";
-import { Tutorial } from "@/components/Tutorial";
+import { TutorialMission } from "@/components/TutorialMission";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -47,7 +47,7 @@ export default function RootLayout({
           {children}
         </AuthSessionProvider>
         <DashboardFloatingButton />
-        <Tutorial />
+        <TutorialMission />
       </body>
     </html>
   );
