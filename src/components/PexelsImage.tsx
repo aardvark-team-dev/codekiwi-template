@@ -17,7 +17,7 @@ interface PexelsImageProps {
  * @param className - 이미지에 적용할 CSS 클래스
  * @param size - 이미지 크기 (small, medium, large, original)
  */
-export function PexelsImage({ 
+export default function PexelsImage({ 
   keyword, 
   alt, 
   className = '',
