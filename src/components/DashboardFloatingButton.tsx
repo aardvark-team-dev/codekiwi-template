@@ -2,6 +2,12 @@
 
 import { useState, useEffect } from 'react';
 import { usePathname, useRouter } from 'next/navigation';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu';
 
 export default function DashboardFloatingButton() {
   const pathname = usePathname();
@@ -29,6 +35,11 @@ export default function DashboardFloatingButton() {
     }
   };
 
+  const handleRestartTutorial = () => {
+    localStorage.removeItem('tutorial-completed');
+    window.location.reload();
+  };
+
   if (isHidden && !isDashboardPage) {
     // 숨김 상태일 때 작은 버튼만 표시
     return (
@@ -53,22 +64,45 @@ export default function DashboardFloatingButton() {
           ✕
         </button>
       )}
-      <button
-        onClick={handleNavigate}
-        className="bg-[#111827] text-white px-6 py-3 rounded-full shadow-lg hover:bg-[#1f2937] transition-all hover:scale-105 font-medium text-sm flex items-center gap-2"
-      >
-        {isDashboardPage ? (
-          <>
-            <span>←</span>
-            <span>나가기</span>
-          </>
-        ) : (
-          <>
-            <span>🥝</span>
-            <span>대시보드</span>
-          </>
-        )}
-      </button>
+      
+      <DropdownMenu>
+        <DropdownMenuTrigger asChild>
+          <button
+            className="bg-[#111827] text-white px-6 py-3 rounded-full shadow-lg hover:bg-[#1f2937] transition-all hover:scale-105 font-medium text-sm flex items-center gap-2"
+          >
+            {isDashboardPage ? (
+              <>
+                <span>←</span>
+                <span>나가기</span>
+              </>
+            ) : (
+              <>
+                <span>🥝</span>
+                <span>키위</span>
+              </>
+            )}
+          </button>
+        </DropdownMenuTrigger>
+        
+        <DropdownMenuContent 
+          align="end" 
+          side="top"
+          className="mb-2 backdrop-blur-lg bg-white/95 border border-gray-200 shadow-xl"
+        >
+          <DropdownMenuItem 
+            onClick={handleNavigate}
+            className="cursor-pointer"
+          >
+            {isDashboardPage ? '홈으로 돌아가기' : '기능 목록 보기'}
+          </DropdownMenuItem>
+          <DropdownMenuItem 
+            onClick={handleRestartTutorial}
+            className="cursor-pointer"
+          >
+            튜토리얼 다시보기
+          </DropdownMenuItem>
+        </DropdownMenuContent>
+      </DropdownMenu>
     </div>
   );
 }
