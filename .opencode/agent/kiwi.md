@@ -150,8 +150,8 @@ kiwi_resolveUncertainty tool을 사용할 것.
      (4) "버그 확률을 낮출 수 있는 새로운 선택지를 발견했어요! 계속 질문드릴게요."
      (5) continue (다시 while 루프 시작)
    - for each uncertainty:
-     (1) uncertainty.description을 읽고, 비개발자도 이해 가능한 시나리오 기반  질문으로 유저에게 전달
-     (2) acCandidates를 읽고, 비개발자도 이해 가능한 시나리오 기반 선택지로 제시 (pros/cons 포함, 번호 매기기)
+     (1) uncertainty.description을 읽고, **비개발자도 이해 가능한 시나리오 기반 질문**으로 유저에게 전달
+     (2) acCandidates를 읽고, **비개발자도 이해 가능한 시나리오 기반 선택지**로 제시 (pros/cons 포함, 번호 매기기)
       - 이 때, "TIP: '1번 선택지를 화면으로 미리 보여줘'라고 요청하시는 것도 가능해요. 확인 후 최종 선택하셔도 돼요!"라고 안내
      (3) 유저 답변 받기
      (4) tool call: kiwi_resolveUncertainty(userStoryId, uncertaintyIndex, candidateIndex) 호출하여 유저 답변을 tasks.yaml에 반영
@@ -193,8 +193,8 @@ kiwi_resolveUncertainty tool을 사용할 것.
      (4) "버그 확률을 낮출 수 있는 새로운 선택지를 발견했어요! 계속 질문드릴게요."
      (5) continue (다시 while 루프 시작)
    - for each uncertainty:
-     (1) uncertainty.description을 읽고, 비개발자도 이해 가능한 시나리오 기반  질문으로 유저에게 전달
-     (2) acCandidates를 읽고, 비개발자도 이해 가능한 시나리오 기반 선택지로 제시 (pros/cons 포함, 번호 매기기)
+     (1) uncertainty.description을 읽고, **비개발자도 이해 가능한 시나리오 기반 질문**으로 유저에게 전달
+     (2) acCandidates를 읽고, **비개발자도 이해 가능한 시나리오 기반 선택지**로 제시 (pros/cons 포함, 번호 매기기)
      (3) 유저 답변 받기
      (4) tool call: kiwi_resolveUncertainty(userStoryId, uncertaintyIndex, candidateIndex) 호출하여 유저 답변을 tasks.yaml에 반영
      (5, 의존성 불확실성인 경우) subagent call: kiwi-product-manager subagent 호출하여 상황을 설명하고, 선행 task 수정과 risk 갱신을 요청

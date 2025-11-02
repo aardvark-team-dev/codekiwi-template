@@ -123,8 +123,9 @@ tasks.yaml의 모든 User Story를 분석하여:
 
 5. **애니메이션 & 인터랙션**
    - 버튼 클릭 시 subtle한 피드백 (opacity 변화)
-   - 애니메이션 최소화 (필요시에만)
    - 로딩 스켈레톤 간단하게
+
+6. 이미지가 필요할 경우 PexelsImage 또는 PexelsImageServer 컴포넌트 사용
 
 **예시 - 미니멀한 카드 컴포넌트:**
 ```tsx

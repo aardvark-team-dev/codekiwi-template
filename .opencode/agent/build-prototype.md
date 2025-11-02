@@ -95,12 +95,11 @@ const mockUsers = [
 - shadcn/ui
 - Tailwind CSS
 - Mock data with localStorage
-- 서버는 항상 localhost:3000
+- 이미지가 필요할 경우 PexelsImage 또는 PexelsImageServer 컴포넌트 사용
 
 [중요]
 - **코드**: 모든 mock 데이터에 `🎨 MOCK DATA` 주석
 - **화면**: 모든 기능에 "⚠️ 경고 표시" + "/ask-me (기능명)" 안내
 
 [중요]
-* 서버는 항상 localhost:3000에서만 실행되어야 함. 
 절대 종료하거나 새 서버를 시작하거나 build하지 말 것.
