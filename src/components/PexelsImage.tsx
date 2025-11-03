@@ -93,18 +93,6 @@ export default function PexelsImage({
         alt={alt || imageData.alt || query} 
         className="w-full h-auto rounded"
       />
-      <p className="text-xs text-gray-500 mt-1">
-        Photo by{' '}
-        <a 
-          href={imageData.photographer_url} 
-          target="_blank" 
-          rel="noopener noreferrer"
-          className="underline hover:text-gray-700"
-        >
-          {imageData.photographer}
-        </a>
-        {' '}on Pexels
-      </p>
     </div>
   );
 }

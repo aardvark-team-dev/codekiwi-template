@@ -11,6 +11,7 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
+import PexelsImage from "@/components/PexelsImage";
 
 // ⚠️ 임시 개발용 컴포넌트 - 제거 필요
 export default function Home() {
