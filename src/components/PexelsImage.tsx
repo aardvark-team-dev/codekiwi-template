@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from 'react';
 
 interface PexelsImageProps {
-  keyword: string;
+  query: string;
   alt?: string;
   className?: string;
   size?: 'small' | 'medium' | 'large' | 'original';
@@ -12,13 +12,13 @@ interface PexelsImageProps {
 /**
  * Pexels API를 사용하여 키워드로 이미지를 검색하고 표시하는 컴포넌트
  * 
- * @param keyword - 검색할 키워드
- * @param alt - 이미지 alt 텍스트 (기본값: keyword)
+ * @param query - 검색할 키워드
+ * @param alt - 이미지 alt 텍스트 (기본값: query)
  * @param className - 이미지에 적용할 CSS 클래스
  * @param size - 이미지 크기 (small, medium, large, original)
  */
 export default function PexelsImage({ 
-  keyword, 
+  query, 
   alt, 
   className = '',
   size = 'medium' 
@@ -33,13 +33,13 @@ export default function PexelsImage({
       setError(null);
 
       try {
-        const apiKey = process.env.NEXT_PUBLIC_PEXELS_API_KEY;
+        const apiKey = process.env.PEXELS_API_KEY;
         
         if (!apiKey) {
-          throw new Error('Pexels API 키가 설정되지 않았습니다. NEXT_PUBLIC_PEXELS_API_KEY 환경 변수를 설정해주세요.');
+          throw new Error('Pexels API 키가 설정되지 않았습니다. PEXELS_API_KEY 환경 변수를 설정해주세요.');
         }
 
-        const url = `https://api.pexels.com/v1/search?query=${encodeURIComponent(keyword)}&per_page=1`;
+        const url = `https://api.pexels.com/v1/search?query=${encodeURIComponent(query)}&per_page=1`;
 
         const response = await fetch(url, {
           headers: {
@@ -64,7 +64,7 @@ export default function PexelsImage({
           };
           setImageUrl(sizeMap[size]);
         } else {
-          throw new Error(`"${keyword}" 키워드로 이미지를 찾을 수 없습니다.`);
+          throw new Error(`"${query}" 키워드로 이미지를 찾을 수 없습니다.`);
         }
       } catch (err) {
         setError(err instanceof Error ? err.message : '알 수 없는 오류가 발생했습니다.');
@@ -74,10 +74,10 @@ export default function PexelsImage({
       }
     };
 
-    if (keyword) {
+    if (query) {
       fetchImage();
     }
-  }, [keyword, size]);
+  }, [query, size]);
 
   if (loading) {
     return (
@@ -102,7 +102,7 @@ export default function PexelsImage({
   return (
     <img 
       src={imageUrl} 
-      alt={alt || keyword} 
+      alt={alt || query} 
       className={className}
     />
   );

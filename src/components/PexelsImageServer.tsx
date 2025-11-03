@@ -1,7 +1,7 @@
 import React from 'react';
 
 interface PexelsImageServerProps {
-  keyword: string;
+  query: string;
   alt?: string;
   className?: string;
   size?: 'small' | 'medium' | 'large' | 'original';
@@ -38,13 +38,13 @@ interface PexelsResponse {
 /**
  * Pexels API를 사용하여 키워드로 이미지를 검색하고 표시하는 서버 컴포넌트
  * 
- * @param keyword - 검색할 키워드
- * @param alt - 이미지 alt 텍스트 (기본값: keyword)
+ * @param query - 검색할 키워드
+ * @param alt - 이미지 alt 텍스트 (기본값: query)
  * @param className - 이미지에 적용할 CSS 클래스
  * @param size - 이미지 크기 (small, medium, large, original)
  */
 export default async function PexelsImageServer({ 
-  keyword, 
+  query, 
   alt, 
   className = '',
   size = 'medium' 
@@ -62,7 +62,7 @@ export default async function PexelsImageServer({
       );
     }
 
-    const url = `https://api.pexels.com/v1/search?query=${encodeURIComponent(keyword)}&per_page=1`;
+    const url = `https://api.pexels.com/v1/search?query=${encodeURIComponent(query)}&per_page=1`;
 
     const response = await fetch(url, {
       headers: {
@@ -83,7 +83,7 @@ export default async function PexelsImageServer({
       return (
         <div className={`bg-yellow-50 border border-yellow-200 p-4 rounded ${className}`}>
           <p className="text-yellow-700 text-sm">
-            &quot;{keyword}&quot; 키워드로 이미지를 찾을 수 없습니다.
+            &quot;{query}&quot; 키워드로 이미지를 찾을 수 없습니다.
           </p>
         </div>
       );
@@ -102,7 +102,7 @@ export default async function PexelsImageServer({
       <div className={className}>
         <img 
           src={imageUrl} 
-          alt={alt || photo.alt || keyword} 
+          alt={alt || photo.alt || query} 
           className="w-full h-auto"
         />
         <p className="text-xs text-gray-500 mt-1">
