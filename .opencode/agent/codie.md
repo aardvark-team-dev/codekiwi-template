@@ -1,7 +1,7 @@
 ---
 description: 기능을 백엔드 단까지 실제로 구현하는 모드입니다.
 mode: primary
-model: openrouter/openai/gpt-5-codex
+model: openrouter/google/gemini-2.5-pro
 temperature: 0
 ---
 
