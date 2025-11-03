@@ -125,6 +125,7 @@ temperature: 0
 - `glob "**/*Repo.interface.ts"`로 Repository 인터페이스 찾기
 - `grep "interface.*Repo" --type ts`로 특정 패턴 검색
 - `read src/domain/[domain]/types.ts`로 타입 확인
+- 반드시 parallel tool call을 사용할 것!
 
 **DON'T: 비효율적인 탐색**
 - ❌ `grep ".*" *.*` - 모든 파일의 모든 내용 검색
