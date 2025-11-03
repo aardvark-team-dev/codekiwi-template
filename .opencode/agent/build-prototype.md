@@ -95,7 +95,7 @@ const mockUsers = [
 - shadcn/ui
 - Tailwind CSS
 - Mock data with localStorage
-- 이미지가 필요할 경우 PexelsImage 또는 PexelsImageServer 컴포넌트 사용
+- 이미지가 필요할 경우 PexelsImage 컴포넌트 사용
 
 [중요]
 - **코드**: 모든 mock 데이터에 `🎨 MOCK DATA` 주석

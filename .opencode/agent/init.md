@@ -95,7 +95,7 @@ tasks.yaml의 모든 User Story를 분석하여:
    - 다크모드 고려한 컬러 페어링
 
 2. **비주얼 우선 레이아웃**
-   - **히어로 섹션**: 전체 화면 PexelsImageServer 배경 + 글래스모피즘 오버레이
+   - **히어로 섹션**: 전체 화면 PexelsImage 배경 + 글래스모피즘 오버레이
    - **카드**: 상단에 PexelsImage (aspect-video, rounded-t-lg) + 콘텐츠
    - **그리드**: grid-cols-1 md:grid-cols-2 lg:grid-cols-3, 모든 아이템에 관련 이미지
 
@@ -121,7 +121,7 @@ tasks.yaml의 모든 User Story를 분석하여:
    - 요소 간격: gap-6 ~ gap-8
 
 **핵심 패턴:**
-- 루트 페이지 → 풀스크린 히어로 (PexelsImageServer 배경)
+- 루트 페이지 → 풀스크린 히어로 (PexelsImage 배경)
 - 리스트 페이지 → 이미지 카드 그리드
 - 상세 페이지 → 대형 헤더 이미지 + 글래스모피즘 콘텐츠
 

@@ -9,11 +9,19 @@ interface PexelsImageProps {
   size?: 'small' | 'medium' | 'large' | 'original';
 }
 
+interface PexelsImageData {
+  imageUrl: string;
+  alt: string;
+  photographer: string;
+  photographer_url: string;
+}
+
 /**
  * Pexels API를 사용하여 키워드로 이미지를 검색하고 표시하는 컴포넌트
+ * API Route를 통해 안전하게 이미지를 가져옵니다.
  * 
  * @param query - 검색할 키워드
- * @param alt - 이미지 alt 텍스트 (기본값: query)
+ * @param alt - 이미지 alt 텍스트 (기본값: API에서 제공하는 alt)
  * @param className - 이미지에 적용할 CSS 클래스
  * @param size - 이미지 크기 (small, medium, large, original)
  */
@@ -23,7 +31,7 @@ export default function PexelsImage({
   className = '',
   size = 'medium' 
 }: PexelsImageProps) {
-  const [imageUrl, setImageUrl] = useState<string>('');
+  const [imageData, setImageData] = useState<PexelsImageData | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -33,39 +41,18 @@ export default function PexelsImage({
       setError(null);
 
       try {
-        const apiKey = process.env.PEXELS_API_KEY;
-        
-        if (!apiKey) {
-          throw new Error('Pexels API 키가 설정되지 않았습니다. PEXELS_API_KEY 환경 변수를 설정해주세요.');
-        }
-
-        const url = `https://api.pexels.com/v1/search?query=${encodeURIComponent(query)}&per_page=1`;
-
-        const response = await fetch(url, {
-          headers: {
-            Authorization: apiKey,
-          },
-        });
+        // API Route 호출 (API 키가 클라이언트에 노출되지 않음!)
+        const response = await fetch(
+          `/api/pexels?query=${encodeURIComponent(query)}&size=${size}`
+        );
 
         if (!response.ok) {
-          throw new Error(`API 요청 실패: ${response.status}`);
+          const errorData = await response.json();
+          throw new Error(errorData.error || 'API 요청 실패');
         }
 
-        const data = await response.json();
-        
-        if (data.photos && data.photos.length > 0) {
-          const photo = data.photos[0];
-          // 요청된 크기에 따라 이미지 URL 선택
-          const sizeMap = {
-            small: photo.src.small,
-            medium: photo.src.medium,
-            large: photo.src.large,
-            original: photo.src.original,
-          };
-          setImageUrl(sizeMap[size]);
-        } else {
-          throw new Error(`"${query}" 키워드로 이미지를 찾을 수 없습니다.`);
-        }
+        const data: PexelsImageData = await response.json();
+        setImageData(data);
       } catch (err) {
         setError(err instanceof Error ? err.message : '알 수 없는 오류가 발생했습니다.');
         console.error('이미지 가져오기 오류:', err);
@@ -81,7 +68,7 @@ export default function PexelsImage({
 
   if (loading) {
     return (
-      <div className={`animate-pulse bg-gray-200 ${className}`} style={{ minHeight: '200px' }}>
+      <div className={`animate-pulse bg-gray-200 rounded ${className}`} style={{ minHeight: '200px' }}>
         <span className="sr-only">이미지 로딩 중...</span>
       </div>
     );
@@ -95,16 +82,30 @@ export default function PexelsImage({
     );
   }
 
-  if (!imageUrl) {
+  if (!imageData) {
     return null;
   }
 
   return (
-    <img 
-      src={imageUrl} 
-      alt={alt || query} 
-      className={className}
-    />
+    <div className={className}>
+      <img 
+        src={imageData.imageUrl} 
+        alt={alt || imageData.alt || query} 
+        className="w-full h-auto rounded"
+      />
+      <p className="text-xs text-gray-500 mt-1">
+        Photo by{' '}
+        <a 
+          href={imageData.photographer_url} 
+          target="_blank" 
+          rel="noopener noreferrer"
+          className="underline hover:text-gray-700"
+        >
+          {imageData.photographer}
+        </a>
+        {' '}on Pexels
+      </p>
+    </div>
   );
 }
 
