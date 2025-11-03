@@ -1,7 +1,7 @@
 ---
 description: 빠르게 작동하는 프로토타입 화면을 만든 다음 kiwi agent에게 통제권을 넘기는 subagent
 mode: subagent
-model: openrouter/moonshotai/kimi-k2-0905
+model: opencode/grok-code
 temperature: 0
 ---
 
