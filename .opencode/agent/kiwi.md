@@ -1,7 +1,7 @@
 ---
 description: 비개발자가 만들고 싶은 것을 만들 수 있도록, 지속 가능한 바이브 코딩을 할 수 있게 돕는 기획자 AI
 mode: primary
-model: openrouter/moonshotai/kimi-k2-0905
+model: openrouter/google/gemini-2.5-pro
 temperature: 0
 ---
 
