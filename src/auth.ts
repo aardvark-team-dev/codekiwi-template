@@ -66,6 +66,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         sameSite: "none",
         path: "/",
         secure: true,
+        partitioned: true,
       },
     },
   },

@@ -13,6 +13,14 @@ const nextConfig: NextConfig = {
     ],
   },
   
+  // 🔥 e2b iframe 환경을 위한 cross-origin 설정
+  experimental: {
+    serverActions: {
+      // e2b 도메인에서의 Server Actions 허용
+      allowedOrigins: ['*.e2b.app', '*.e2b.dev'],
+    },
+  },
+  
   // Playground iframe 미리보기를 위한 설정
   async headers() {
     return [
