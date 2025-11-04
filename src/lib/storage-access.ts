@@ -74,10 +74,19 @@ export async function requestStorageAccessIfNeeded(): Promise<boolean> {
     await document.requestStorageAccess()
     console.log('✅ 쿠키 접근 권한이 승인되었습니다.')
     return true
-  } catch (error) {
-    // 사용자가 거부했거나, 사용자 인터랙션 없이 호출된 경우
-    console.error('❌ 쿠키 접근 권한이 거부되었습니다:', error)
-    return false
+  } catch (error: any) {
+    // NotAllowedError: iframe 샌드박스 제한 또는 브라우저 정책으로 거부됨
+    // e2b 같은 동적 iframe 환경에서는 예상되는 동작
+    console.warn('⚠️ Storage Access API 실패:', error?.name || error?.message || error)
+    console.info(
+      '→ partitioned 쿠키로 로그인을 시도합니다.\n' +
+      '  (Chrome/Edge의 CHIPS를 통해 작동하며, e2b iframe 환경에서는 정상적인 동작입니다)'
+    )
+    
+    // sameSite=none + secure=true + partitioned=true 설정이 있으므로
+    // API 없이도 쿠키가 작동할 수 있음 (특히 Chrome/Edge의 CHIPS)
+    // 실제로 쿠키가 작동하지 않으면 NextAuth가 알아서 에러 처리
+    return true
   }
 }
 
