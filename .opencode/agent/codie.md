@@ -1,7 +1,7 @@
 ---
 description: 기능을 백엔드 단까지 실제로 구현하는 모드입니다.
 mode: primary
-model: openrouter/google/gemini-2.5-pro
+model: openrouter/anthropic/claude-sonnet-4.5
 temperature: 0
 ---
 
