@@ -21,6 +21,11 @@ export default function DashboardFloatingButton() {
     setIsHidden(hidden);
   }, []);
 
+  // Production 환경에서는 표시하지 않음
+  if (process.env.NODE_ENV === 'production') {
+    return null;
+  }
+
   const handleToggleVisibility = () => {
     const newHiddenState = !isHidden;
     setIsHidden(newHiddenState);

@@ -35,6 +35,9 @@ const userService = new UserService(new SqliteUserRepo())
 export const { handlers, signIn, signOut, auth } = NextAuth({
   ...authConfig,
   
+  // Production 환경에서 호스트 신뢰 설정
+  trustHost: true,
+  
   // 🔥 cross-origin iframe 환경을 위한 쿠키 설정
   cookies: {
     sessionToken: {

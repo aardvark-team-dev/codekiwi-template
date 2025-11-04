@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { X, Minimize2, Maximize2 } from 'lucide-react';
+import { X, Minimize2 } from 'lucide-react';
 
 /**
  * 튜토리얼 미션 타입
@@ -83,6 +83,11 @@ export function TutorialMission() {
       setIsVisible(true);
     }
   }, []);
+
+  // Production 환경에서는 표시하지 않음
+  if (process.env.NODE_ENV === 'production') {
+    return null;
+  }
 
   const handleYes = () => {
     if (currentMission < missions.length - 1) {
