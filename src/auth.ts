@@ -41,7 +41,6 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
   // 🔥 cross-origin iframe 환경을 위한 쿠키 설정
   cookies: {
     sessionToken: {
-      name: `__Secure-authjs.session-token`,
       options: {
         httpOnly: true,
         sameSite: "none",  // cross-origin 허용
@@ -51,7 +50,6 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       },
     },
     callbackUrl: {
-      name: `__Secure-authjs.callback-url`,
       options: {
         sameSite: "none",
         path: "/",
@@ -60,7 +58,6 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       },
     },
     csrfToken: {
-      name: `__Host-authjs.csrf-token`,
       options: {
         httpOnly: true,
         sameSite: "none",

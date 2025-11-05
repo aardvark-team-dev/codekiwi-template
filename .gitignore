@@ -43,5 +43,3 @@ app.log
 
 dockerfile
 docker-compose.yml
-IFRAME_SETUP.md
-IFRAME_CLIENT_GUIDE.md
